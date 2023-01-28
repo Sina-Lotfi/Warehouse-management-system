@@ -1,7 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 from employee import employeeClass
-
+from supplier import supplierClass
 
 class WMS:
     def __init__(self, root) -> None:
@@ -36,7 +36,7 @@ class WMS:
             file="images\side.png")
         lbl_employee = Button(LeftMenu, text="کارمندان",command=self.employee,image=self.icon_side, compound=RIGHT,padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
-        lbl_supliers = Button(LeftMenu, text="تامین کنندگان", image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
+        lbl_supliers = Button(LeftMenu, text="تامین کنندگان",command=self.supplier, image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
         lbl_category = Button(LeftMenu, text="دسته‌بندی", image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
@@ -66,6 +66,10 @@ class WMS:
         lbl_footer = Label(self.root, text="سیستم مدیریت انبارداری | توسعه داده شده توسط تیم هشتگ \n دانشگاه صنعتی همدان ترم پاییز ۴۰۱",font=("times", 10), bg="#4d636d", fg="white").pack(side=BOTTOM, fill=X)
         #==============================================================================================
     def employee(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = employeeClass(self.new_win)
+
+    def supplier(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = employeeClass(self.new_win)
         
