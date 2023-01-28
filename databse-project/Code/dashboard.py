@@ -2,6 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from employee import employeeClass
 from supplier import supplierClass
+from category import categoryClass
 
 class WMS:
     def __init__(self, root) -> None:
@@ -38,7 +39,7 @@ class WMS:
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
         lbl_supliers = Button(LeftMenu, text="تامین کنندگان",command=self.supplier, image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
-        lbl_category = Button(LeftMenu, text="دسته‌بندی", image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
+        lbl_category = Button(LeftMenu, text="دسته‌بندی",command=self.category, image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
         lbl_product = Button(LeftMenu, text="محصولات", image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
@@ -71,9 +72,11 @@ class WMS:
 
     def supplier(self):
         self.new_win = Toplevel(self.root)
-        self.new_obj = employeeClass(self.new_win)
+        self.new_obj = supplierClass(self.new_win)
         
-
+    def category(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = categoryClass(self.new_win)
 
 if __name__ == "__main__":
     root = Tk()
