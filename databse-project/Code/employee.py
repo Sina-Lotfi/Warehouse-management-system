@@ -34,7 +34,7 @@ class employeeClass:
 
 
         txt_search = Entry(searchFrame,font=("goudy old style", 15),textvariable=self.var_txt_search, bg="lightyellow").place(x=200, y=4)
-        btn_search = Button(searchFrame,text="جستجو", font=(
+        btn_search = Button(searchFrame,text="جستجو",command=self.search, font=(
             "goudy old style", 13), bg="#4caf50", fg="white", cursor="hand2").place(x=430, y=2, width=150, height=30)
         #=======title=================
         title = Label(self.root, text="اطلاعات کارمندان", font=("goudy old style", 15),bg="#0f4d7d",fg="white").place(x=0,y=100, width=1100)
@@ -98,7 +98,7 @@ class employeeClass:
             "goudy old style", 13), bg="#4caf50", fg="white", cursor="hand2").place(x=620, y=305, width=110, height=28)
         btn_delete = Button(self.root, text="حذف",command=self.delete, font=(
             "goudy old style", 13), bg="#f44336", fg="white", cursor="hand2").place(x=740, y=305, width=110, height=28)
-        btn_clear = Button(self.root, text="پاک کردن", font=(
+        btn_clear = Button(self.root, text="پاک کردن",command=self.clear, font=(
             "goudy old style", 13), bg="#607d8b", fg="white", cursor="hand2").place(x=860, y=305, width=110, height=28)
         #=========employee details======
         emp_frame = Frame(self.root,bd=3, relief=RIDGE)
@@ -253,16 +253,79 @@ class employeeClass:
                     messagebox.showerror(
                         "Eroof", "کد پرسنلی وارد شده اشتباه میباشد", parent=self.root)
                 else:
-                    op = messagebox.askyesno("تاییده","آیا قصد پاکسازی کاربر را دارید؟",self.root)
+                    op = messagebox.askyesno("تاییدیه","آیا قصد پاکسازی کاربر را دارید؟",parent=self.root)
                     if op == True:
                         cur.execute("delete from employee where eid=?",(self.var_emp_id.get(),))
                         con.commit()
-                        messagebox.showinfo("حذف", "کاربر با موفقیت حذف شد", self.root)
+                        messagebox.showinfo("حذف", "کاربر با موفقیت حذف شد", parent=self.root)
+                        self.clear()
                         self.show()
-
-
         except Exception as ex:
              messagebox.showerror(
+                "خطا", f"خطای رخ داده : {str(ex)}", parent=self.root)
+    
+
+
+    def clear(self):
+        self.var_emp_id.set("")
+        self.var_name.set("")
+        self.var_email.set("")
+        self.var_gender.set("انتخاب")
+        self.var_contact.set("")
+        self.var_dob.set("")
+        self.var_doj.set("")
+        self.var_pass.set("")
+        self.var_utype.set("مدیر")
+        self.txt_address.delete('1.0', END)
+        self.var_salary.set("")
+        self.var_txt_search.set("")
+        self.var_search_by.set("انتخاب")
+
+
+    def search(self):
+        con = sqlite3.connect(database=r'wms.db')
+        cur = con.cursor()
+        try:
+            if self.var_search_by.get() == "انتخاب":
+                messagebox.showerror("خطا","آپشن جستجو باید انتخاب شود", parent=self.root)
+            elif self.var_txt_search.get() == "":
+                messagebox.showerror(
+                    "خطا", "فیلد جستجو باید پر شود", parent=self.root)
+            else:
+                if self.var_search_by.get() == "نام":
+                    cur.execute("select * from employee where name LIKE '%"+self.var_txt_search.get()+"%'")
+                    rows = cur.fetchall()
+                    if len(rows) !=0:
+                        self.EmployeeTable.delete(*self.EmployeeTable.get_children())
+                        for row in rows:
+                            self.EmployeeTable.insert('', END, values=row)
+                    else:
+                        messagebox.showerror(
+                            "خطا", "کاربری یافت نشد", parent=self.root)
+                elif self.var_search_by.get() == "ایمیل":
+                    cur.execute("select * from employee where email LIKE '%"+self.var_txt_search.get()+"%'")
+                    rows = cur.fetchall()
+                    if len(rows) != 0:
+                        self.EmployeeTable.delete(
+                            *self.EmployeeTable.get_children())
+                        for row in rows:
+                            self.EmployeeTable.insert('', END, values=row)
+                    else:
+                        messagebox.showerror(
+                            "خطا", "کاربری یافت نشد", parent=self.root)
+                elif self.var_search_by.get() == "شماره تلفن":
+                    cur.execute("select * from employee where contact LIKE '%"+self.var_txt_search.get()+"%'")
+                    rows = cur.fetchall()
+                    if len(rows) != 0:
+                        self.EmployeeTable.delete(
+                            *self.EmployeeTable.get_children())
+                        for row in rows:
+                            self.EmployeeTable.insert('', END, values=row)
+                    else:
+                        messagebox.showerror(
+                            "خطا", "کاربری یافت نشد", parent=self.root)
+        except Exception as ex:
+            messagebox.showerror(
                 "خطا", f"خطای رخ داده : {str(ex)}", parent=self.root)
 
 if __name__ == "__main__":
