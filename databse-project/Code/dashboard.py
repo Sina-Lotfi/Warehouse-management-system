@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 from employee import employeeClass
 from supplier import supplierClass
 from category import categoryClass
-
+from product import productClass
 class WMS:
     def __init__(self, root) -> None:
         self.root = root
@@ -41,7 +41,7 @@ class WMS:
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
         lbl_category = Button(LeftMenu, text="دسته‌بندی",command=self.category, image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
-        lbl_product = Button(LeftMenu, text="محصولات", image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
+        lbl_product = Button(LeftMenu, text="محصولات",command=self.product, image=self.icon_side, compound=RIGHT, padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
         lbl_sale = Button(LeftMenu, text="فروش",image=self.icon_side, compound=RIGHT,padx=20, anchor="e", font=(
             "times", 20, "bold"), bg="white", bd=2, cursor="hand2").pack(side=TOP, fill=X)
@@ -78,6 +78,9 @@ class WMS:
         self.new_win = Toplevel(self.root)
         self.new_obj = categoryClass(self.new_win)
 
+    def product(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = productClass(self.new_win)
 if __name__ == "__main__":
     root = Tk()
     obj = WMS(root)
