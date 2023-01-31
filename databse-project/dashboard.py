@@ -108,11 +108,11 @@ class WMS:
             employee = cur.fetchall()
             self.lbl_employee.config(
                 text=f"تعداد کارمندان\n[ {str(len(employee))} ]")
-            cur.execute("select * from category")
+            cur.execute("select * from supplier")
             supplier = cur.fetchall()
             self.lbl_supliers.config(
                 text=f"تعداد منابع\n[ {str(len(supplier))} ]")
-            cur.execute("select * from category")
+            cur.execute("select * from product")
             product = cur.fetchall()
             self.lbl_products.config(
                 text=f"تعداد محصولات\n[ {str(len(product))} ]")

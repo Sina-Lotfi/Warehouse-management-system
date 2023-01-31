@@ -79,9 +79,8 @@ class Login_System:
                     messagebox.showerror(
                         "خطا", "نام کاربری یا رمز ورود اشتباه است دوباره امتحان کنید", parent=self.root)
                 else:
-                    if user == "مدیر":
-                        self.root.destroy()
-                        os.system("Python dashboard.py")
+                     self.root.destroy()
+                     os.system("Python dashboard.py")
         except Exception as ex:
             messagebox.showerror(
                 "خطا", f"خطای رخ داده : {str(ex)}", parent=self.root)
